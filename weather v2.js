@@ -14,13 +14,15 @@ basic.forever(function () {
     current_WindSpeed = Math.trunc(weatherbit.windSpeed())
     current_WindDirection_List = weatherbit.windDirection()
     temp = Math.idiv(weatherbit.temperature(), 100)
+    preasure = Math.idiv(weatherbit.pressure(), 25600)
     tempF = temp * 9 / 5 + 32
     humid = Math.idiv(weatherbit.humidity(), 1024)
     serial.writeLine("Wind" + " " + current_WindSpeed + "," +
         "Direction" + " " + current_WindDirection_List + "," +
         "Temp" + " " + temp + "," +
         "TempF" + " " + tempF + "," +
-        "Humidity" + " " + humid)
+        "Humidity" + " " + humid + "," +
+        "Preasure" + " " + preasure)
     rain = weatherbit.rain()
     if (rain < 1) {
         serial.writeLine("Not Raining")
