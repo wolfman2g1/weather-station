@@ -1,15 +1,40 @@
 #!/usr/bin/python3
 import serial
+import time
 import configparser
 
-## load the config info
-config = configparser.ConfigParser()
-config.read('config.ini')
-serial_port = config['Serial'['port']
-serial_rate = config['Serial'].getint('rate')
-db_server = config['Database']['server']
-database = config['Database']['db']
+ser = serial.Serial('COM3', 115200, timeout=2)
 
-# set up serial port
-def connect_serial:
-    ser = serial.Serial(serial_port, serial_rate)
+def mak_num(thing):
+    try:
+        thing2 = int(thing.split(".")[0])
+    except:
+        thing2 = 0
+    return thing2
+
+def mak_float(thing):
+    try:
+        if "." in thing:
+            thing2 = float(thing)
+        else:
+            thing2 = float(thing + ".0")
+    except:
+        thing2 = 0
+    return thing2
+
+while True:
+    data = ser.readlines()
+    if len(data) > 0:
+        goodData = data[0].decode("utf-8").rstrip().split(',')
+        print(goodData)
+        json_data = { "timestamp": time.time(),
+                      "wind_Speed": mak_num(goodData[0]),
+                      "wind_dir": goodData[1],
+                      "temp_c": mak_num(goodData[2]),
+                      "temp_f": mak_num(goodData[3].split(".")[0]),
+                      "humidity": mak_num(goodData[4]),
+                      "baro": mak_num(goodData[5].split(".")[0]),
+                      "rain": mak_num(goodData[6])}
+        print(json_data)
+
+ser.close()
