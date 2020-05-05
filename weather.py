@@ -22,7 +22,7 @@ serial_rate = parser.get('Serial', 'rate')
 try:
     from rabbitmq import RabbitMq
 except Exception as err:
-    print("Class Library Not Found ",err)
+    print("Class Library Not Found ", err)
 
 
 def mak_num(thing):
@@ -54,7 +54,7 @@ def make_empty(thing):
 
 
 def start():
-    ser = serial.Serial(serial_port, serial_rate, timeout=2 )
+    ser = serial.Serial(serial_port, serial_rate, timeout=2)
     ser.reset_input_buffer()
     ser.reset_output_buffer()
     while True:
@@ -70,8 +70,8 @@ def start():
                          "humidity": mak_num(goodData[4]),
                          "baro": mak_num(goodData[5]),
                          "rain": mak_num(goodData[6])
-                        }
-            #print(json_data)
+                         }
+
 
         except:
             ser.reset_input_buffer()
@@ -80,15 +80,7 @@ def start():
         rabbit = RabbitMq()
         rabbit.publish(json_data)
 
-
-
-
     ser.close()
-
-
-def ship(list_data):
-    rabbit = RabbitMq()
-    rabbit.publish(list_data)
 
 
 if __name__ == "__main__":
