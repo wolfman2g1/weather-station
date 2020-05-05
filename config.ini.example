@@ -1,0 +1,8 @@
+[Serial]
+rate = 115200
+port = COM3 // put your serial port info here
+
+[Database]
+server = 10.0.4.193 // p
+db = weather
+db_port = 8086

@@ -22,6 +22,8 @@ basic.forever(function () {
     rain = weatherbit.rain()
     if (rain > 1) {
         rainData = rain.toString()
+    } else {
+        rainData = null
     }
     serial.writeLine("" + current_WindSpeed + "," + current_WindDirection_List + "," + temp + "," + tempF + "," + humid + "," + preasure + "," + rainData)
     basic.pause(1 * 3000)
