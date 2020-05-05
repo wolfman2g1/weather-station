@@ -1,8 +1,12 @@
 [Serial]
 rate = 115200
-port = COM3 // put your serial port info here
+port = COM3 # change to the serial port of your computer/ pi
 
-[Database]
-server = 10.0.4.193 // p
-db = weather
-db_port = 8086
+
+
+[AMQP]
+server =  # IP or hostname of your RabbitMQ server
+queue = weather # RabbitMQ queue, leave this or change to whatever you want
+exchange = weather # RabbitMQ exchange, leave this or change to whatever you want
+user = # RabbitMQ Uername
+password = # RabbitMQ password
