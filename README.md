@@ -27,3 +27,10 @@ fix any idiotic mistakes that you may find. With that said, this is a good proje
 * PySerial
 * Influxdb (optional)
 * pika (optional)
+* requests ( optional)
+
+** TODO **
+* set up the script to send the live data to weather underground
+* increase the sleep in the microbit to to 5 min or have the code that calls the weather underground api run only once every 5 mins
+* build a small simple web server for easy viewing without grafana
+
