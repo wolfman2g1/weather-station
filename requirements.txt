@@ -1,3 +1,4 @@
 Pyserial
 influxdb
 pika
+requests

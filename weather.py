@@ -47,9 +47,9 @@ def mak_float(thing):
 def make_empty(thing):
     try:
         if "??" in thing:
-            thing = " "
+            thing2 = str(thing)
     except:
-        thing = "null"
+        thing2 = "null"
     return thing
 
 
@@ -64,7 +64,7 @@ def start():
             goodData = data[0].decode("utf-8").rstrip().split(',')
             json_data = {"timestamp": time.time(),
                          "wind_Speed": mak_num(goodData[0]),
-                         "wind_dir": goodData[1],
+                         "wind_dir": make_empty(goodData[1]),
                          "temp_c": mak_num(goodData[2]),
                          "temp_f": mak_num(goodData[3]),
                          "humidity": mak_num(goodData[4]),
