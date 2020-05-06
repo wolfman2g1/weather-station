@@ -50,7 +50,7 @@ def make_empty(thing):
             thing2 = str(thing)
     except:
         thing2 = "null"
-    return thing
+    return thing2
 
 
 def start():
