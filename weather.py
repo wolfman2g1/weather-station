@@ -77,8 +77,12 @@ def start():
             ser.reset_input_buffer()
             ser.reset_output_buffer()
             time.sleep(5)
-        rabbit = RabbitMq()
-        rabbit.publish(json_data)
+        # occasionally we seem to loose connnection to rabbitmq so if that happens we'll wait 15 seconds then try again
+        try:
+            rabbit = RabbitMq()
+            rabbit.publish(json_data)
+        except:
+            time.sleep(15)
 
     ser.close()
 

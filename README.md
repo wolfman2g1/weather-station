@@ -27,3 +27,10 @@ fix any idiotic mistakes that you may find. With that said, this is a good proje
 * PySerial
 * Influxdb (optional)
 * pika (optional)
+
+**TODO**
+* Add some logging
+* Figure out why wind direction field is dropped by telegraf/influxdb
+* research using Elastic search instead of influx as my backend
+* potential alerting ( perhaps via grafana when no new data is received after a period of time)
+* shell script to help users install.
