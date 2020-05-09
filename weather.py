@@ -83,6 +83,8 @@ def start():
             rabbit.publish(json_data)
         except:
             time.sleep(15)
+            rabbit = RabbitMq()
+            rabbit.publish(json_data)
 
     ser.close()
 
