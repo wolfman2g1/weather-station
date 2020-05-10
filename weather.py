@@ -62,7 +62,7 @@ def start():
         data = ser.readlines()
         try:
             goodData = data[0].decode("utf-8").rstrip().split(',')
-            json_data = {"timestamp": time.time(),
+            json_data = {
                          "wind_Speed": mak_num(goodData[0]),
                          "wind_dir": goodData[1],
                          "temp_c": mak_num(goodData[2]),
