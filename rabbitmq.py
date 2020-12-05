@@ -32,7 +32,7 @@ class RabbitMq(object):
 
     def publish(self, payload={}):
         try:
-            self._channel.basic_publish(exchange=pika_exchange, routing_key=pika_queue, body=json.dumps(payload))
+            self._channel.basic_publish(exchange=pika_exchange, routing_key='pika_queue', body=json.dumps(payload))
             self._connection.close()
         except (UnroutableError, NackError) as e:
             print('Rabbit MQ Error', e)
