@@ -18,11 +18,15 @@ except configparser.ParsingError as err:
 serial_port = parser.get('Serial', 'port')
 serial_rate = parser.get('Serial', 'rate')
 
+# import datastore option
+
+datastore = parser.get('DATASTORE', 'influx')
 # import our rabbit mq class
-try:
-    from rabbitmq import RabbitMq
-except Exception as err:
-    print("Class Library Not Found ", err)
+if datastore == True:
+   try:
+      from rabbitmq import RabbitMq
+   except Exception as err:
+      print("Class Library Not Found ", err)
 
 
 def mak_num(thing):
@@ -78,6 +82,7 @@ def start():
             ser.reset_output_buffer()
             time.sleep(5)
         # occasionally we seem to loose connnection to rabbitmq so if that happens we'll wait 15 seconds then try again
+        
         try:
             rabbit = RabbitMq()
             rabbit.publish(json_data)

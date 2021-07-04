@@ -10,3 +10,14 @@ queue = weather # RabbitMQ queue, leave this or change to whatever you want
 exchange = weather # RabbitMQ exchange, leave this or change to whatever you want
 user = # RabbitMQ Uername
 password = # RabbitMQ password
+
+[INFLUX]
+server =  # IP or hostname of your Influxdb server
+user = # Influxdb Uername
+password = # Influxdb password
+database = # Influxdb Database
+retention = # Influxdb retention policy
+
+[DATASTORE]
+
+influx = # true || false
