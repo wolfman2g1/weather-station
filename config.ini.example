@@ -12,7 +12,7 @@ user = # RabbitMQ Uername
 password = # RabbitMQ password
 
 [INFLUX]
-server =  # IP or hostname of your Influxdb server
+influx_server =  # IP or hostname of your Influxdb server
 user = # Influxdb Uername
 password = # Influxdb password
 database = # Influxdb Database

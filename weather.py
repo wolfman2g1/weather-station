@@ -4,9 +4,15 @@ try:
     import time
     import configparser
     import json
+    from influxdb import InfluxDBClient
+    import logging
+    from retrying import retry
 except Exception as err:
     print('some Python modules are missing {}'.format_map(err))
 
+# set up logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 # check that config exists
 try:
     parser = configparser.ConfigParser()
@@ -21,13 +27,12 @@ serial_rate = parser.get('Serial', 'rate')
 # import datastore option
 
 datastore = parser.get('DATASTORE', 'influx')
-# import our rabbit mq class
-if datastore == True:
-   try:
-      from rabbitmq import RabbitMq
-   except Exception as err:
-      print("Class Library Not Found ", err)
 
+influx_server = parser.get('INFLUX', 'influx_server')
+user = parser.get('INFLUX', 'user')
+password = parser.get('INFLUX', 'password')
+database = parser.get('INFLUX', 'database')
+retention = parser.get('INFLUX', 'retention')
 
 def mak_num(thing):
     try:
@@ -57,6 +62,18 @@ def make_empty(thing):
     return thing
 
 
+#@retry(wait_exponential_multiplier=1000, wait_exponential_max=10000)
+def sendToInflux(payload={}):
+    client = InfluxDBClient(host=influx_server, username=user, password=password, database=database, port=8086,
+                            ssl=False)
+
+    try:
+        client.write_points(json.dumps(payload))
+
+    except Exception as e:
+        logger.exception(e)
+
+
 def start():
     ser = serial.Serial(serial_port, serial_rate, timeout=2)
     ser.reset_input_buffer()
@@ -82,17 +99,19 @@ def start():
             ser.reset_output_buffer()
             time.sleep(5)
         # occasionally we seem to loose connnection to rabbitmq so if that happens we'll wait 15 seconds then try again
-        
-        try:
-            rabbit = RabbitMq()
-            rabbit.publish(json_data)
-        except:
-            time.sleep(15)
-            rabbit = RabbitMq()
-            rabbit.publish(json_data)
+        while True:
+            try:
+               sendToInflux(json_data)
+            except:
+               time.sleep(15)
+
 
     ser.close()
 
 
 if __name__ == "__main__":
+    client = InfluxDBClient(host=influx_server, username=user, password=password, database=database, port=8086,
+                            ssl=False)
+    client.create_database(database)
+    client.create_retention_policy(database, duration='60d', replication='1', database=database)
     start()
